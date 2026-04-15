@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { Toaster } from "sonner";
+import { AppShell } from "@/components/AppShell";
 import { ReduxProvider } from "@/components/ReduxProvider";
 import "./globals.css";
 
@@ -14,8 +16,11 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Next.js App",
-  description: "Next.js template with Redux and Tailwind",
+  title: "Luckee - NextJS to Preview",
+  description: "TSX preview and PNG download — persisted in localStorage",
+  icons: {
+    icon: [{ url: "/logo.svg", type: "image/svg+xml" }],
+  },
 };
 
 export default function RootLayout({
@@ -26,9 +31,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-white text-gray-900`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-zinc-50 text-gray-900`}
       >
-        <ReduxProvider>{children}</ReduxProvider>
+        <ReduxProvider>
+          <AppShell>{children}</AppShell>
+          <Toaster richColors position="top-center" />
+        </ReduxProvider>
       </body>
     </html>
   );
