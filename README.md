@@ -1,3 +1,16 @@
+<p align="center">
+  <a href="https://luckeeapp.com" title="Luckee — visit luckeeapp.com">
+    <img src="./public/logo.svg" alt="Luckee logo" width="72" height="72" />
+  </a>
+</p>
+
+<p align="center">
+  <strong>Sponsored by <a href="https://luckeeapp.com">Luckee</a></strong><br />
+  <sub>Open-source tools from the Luckee team. Use the full product at <a href="https://luckeeapp.com">luckeeapp.com</a>.</sub>
+</p>
+
+---
+
 # nextjs-to-download
 
 Next.js app that **compiles TSX in the browser**, shows a **fixed 16:9 preview** in an iframe, and lets you **save a draft** and **download a PNG** (or print / Save as PDF). **No Express server**: `src/api` modules are **thin wrappers over `localStorage`**.
