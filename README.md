@@ -13,7 +13,7 @@
 
 # nextjs-to-download
 
-Next.js app that **compiles TSX in the browser**, shows a **fixed 16:9 preview** in an iframe, and lets you **save a draft** and **download a PNG** (or print / Save as PDF). **No Express server**: `src/api` modules are **thin wrappers over `localStorage`**.
+Next.js app that **compiles TSX in the browser**, shows a **live iframe preview** at each graphic’s **canvas size** (you pick dimensions or a preset when creating the graphic), and lets you **save a draft** and **download a PNG** (or print / Save as PDF). **No Express server**: `src/api` modules are **thin wrappers over `localStorage`**.
 
 **Open source (MIT).** All state stays in the visitor’s browser—Vercel only serves static/SSR assets and the JS bundle.
 
