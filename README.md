@@ -15,17 +15,7 @@
 
 Next.js app that **compiles TSX in the browser**, shows a **live iframe preview** at each graphic’s **canvas size** (you pick dimensions or a preset when creating the graphic), and lets you **save a draft** and **download a PNG** (or print / Save as PDF). **No Express server**: `src/api` modules are **thin wrappers over `localStorage`**.
 
-**Open source (MIT).** All state stays in the visitor’s browser—Vercel only serves static/SSR assets and the JS bundle.
-
-## Deploy to Vercel (no env vars)
-
-1. Push this repo to GitHub (or GitLab / Bitbucket).
-2. In [Vercel](https://vercel.com): **Add New… → Project** → import the repo.
-3. Leave defaults: **Framework Preset** = Next.js, **Root Directory** = `.`, **Build Command** = `next build`, **Output** = automatic.
-4. **Environment Variables**: add none—this project does not read required secrets at build or runtime.
-5. Deploy. Optional: set a friendly production domain in Vercel → Project → **Domains**.
-
-`NEXT_PUBLIC_API_BASE_URL` in `src/api/config.ts` is optional and unused by the UI; you can ignore it unless you add a future API.
+**Open source (MIT).** All state stays in the visitor’s browser; production is just static/SSR assets and the JS bundle.
 
 ## Run locally
 
@@ -55,15 +45,6 @@ Thunks in `src/store/thunks/image-creation-studio/` call those API wrappers and 
 ## Security
 
 TSX preview **executes compiled JavaScript** in an iframe. See `docs/tsx-live-preview-security.md`. Treat pasted or model-generated TSX as **trusted input** only.
-
-## Brand
-
-- Sidebar / tab icon use **`/public/logo.svg`** (Luckee orange **`#ff7c1e`**).
-
-## Landing page (Lovable / AI builders)
-
-- **Full page** (sticky nav, hero, repo card, features, why, audience, security, MIT — **same section rhythm as Luckee `/icp-studio`**): `docs/lovable-full-landing-prompt.md`
-- **Hero-only** (THT + Luckee marketing vibe): `docs/lovable-landing-hero-prompt.md`
 
 ## Layout
 
