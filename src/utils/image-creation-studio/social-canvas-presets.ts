@@ -1,6 +1,7 @@
 /**
- * Common social / ad canvas sizes (approximate platform recommendations).
- * Users pick one at graphic creation; dimensions are stored on the graphic.
+ * Common social / ad canvas sizes, pitch-deck slide sizes, and document page presets
+ * (approximate platform recommendations). Users pick one at graphic creation; dimensions are
+ * stored on the graphic.
  */
 export type SocialCanvasPreset = {
   id: string;
@@ -131,5 +132,45 @@ export const SOCIAL_CANVAS_PRESETS: SocialCanvasPreset[] = [
     orientation: "landscape",
     widthPx: 1200,
     heightPx: 630,
+  },
+  {
+    id: "pitch-widescreen-1080",
+    label: "Widescreen slide (16:9, 1080p)",
+    platform: "Pitch deck",
+    orientation: "landscape",
+    widthPx: 1920,
+    heightPx: 1080,
+  },
+  {
+    id: "pitch-widescreen-720",
+    label: "Widescreen slide (16:9, 720p)",
+    platform: "Pitch deck",
+    orientation: "landscape",
+    widthPx: 1280,
+    heightPx: 720,
+  },
+  {
+    id: "pitch-classic-43",
+    label: "Classic slide (4:3)",
+    platform: "Pitch deck",
+    orientation: "landscape",
+    widthPx: 1024,
+    heightPx: 768,
+  },
+  {
+    id: "resume-us-letter-96dpi",
+    label: "US Letter (8.5×11 in @ 96dpi)",
+    platform: "Resume & documents",
+    orientation: "portrait",
+    widthPx: 816,
+    heightPx: 1056,
+  },
+  {
+    id: "resume-a4-96dpi",
+    label: "A4 (210×297 mm @ 96dpi)",
+    platform: "Resume & documents",
+    orientation: "portrait",
+    widthPx: 794,
+    heightPx: 1123,
   },
 ];

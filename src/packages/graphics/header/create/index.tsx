@@ -162,9 +162,11 @@ export const GraphicsListCreateModal = () => {
         </div>
 
         <div className={styles.presetsSection}>
-          <p className={styles.sectionTitle}>Social & common sizes</p>
+          <p className={styles.sectionTitle}>Presets: social, pitch deck, résumé, web</p>
           <p className={styles.presetsIntro}>
-            Typical landscape, portrait, or square sizes—tap to apply. Orientation is noted per preset.
+            Social and link-preview sizes, standard pitch slide sizes (16:9 and 4:3), plus US
+            Letter and A4 page dimensions at 96dpi for one-page layouts—tap to apply. Orientation
+            is noted per preset.
           </p>
           <div className={styles.presetsScroll}>
             {presetsByPlatform.map(([platform, presets]) => (

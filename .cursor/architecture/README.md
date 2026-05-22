@@ -18,6 +18,7 @@ ADRs keep implementation consistent across the project by documenting:
 4. [004 – API integration](./004-api-integration.md) — API clients, typing, and separation from UI.
 5. [005 – File organization](./005-file-organization.md) — Canonical `src/` layout (`packages/`, `api/`, etc.).
 6. [006 – Constants and utilities](./006-constants-utilities.md) — Shared constants and pure utilities.
+7. [007 – Studio preview PNG export](./007-studio-preview-png-export.md) — **html2canvas** capture of the TSX iframe (`#root`, `foreignObjectRendering`, clone tuning).
 
 ## How to use
 

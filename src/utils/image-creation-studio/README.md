@@ -63,10 +63,11 @@ Nothing here talks to a server. It all runs in **your browser**. If something br
 - Load **Tailwind Play** from the internet (so classes work).
 - Load **React + ReactDOM** from **unpkg** (pinned to a React version that still ships **UMD** builds—think “old-school script tags”).
 - A small **boot script** (yes, written as text) that:
-  - pretends to be `require` but only answers for `react` / JSX runtime,
+  - pretends to be `require` but answers for `react` / JSX runtime, plus **light stubs** for
+    `next/navigation` and `next/link` so pasted App Router components can render (navigation is a no-op),
   - runs your compiled code,
   - finds `export default`,
-  - calls `createRoot` or `render` into a `#root` div.
+  - calls `createRoot` or `render` into a div whose id is **`IMAGE_STUDIO_PREVIEW_ROOT_ELEMENT_ID`** (currently `"root"`, shared with the PNG download thunk).
 
 Why strings? Because the iframe only eats a **string dinner** (`srcDoc`). The dinner has to include recipes as text. It feels ugly in code reviews; for this OSS tool it is normal.
 
@@ -85,6 +86,13 @@ Why strings? Because the iframe only eats a **string dinner** (`srcDoc`). The di
 
 ---
 
+### PNG export (`downloadImageGraphicPreviewPngThunk`)
+
+**You see:** **Download image** saves a PNG that should match the preview (especially small labels on chips and buttons).  
+**What is going on:** a Redux thunk runs **html2canvas** on the preview mount inside the iframe—not a literal OS screenshot. **Why text can drift** and **what we do about it** (capture target, `foreignObjectRendering`, clone-time font smoothing) are documented in **`.cursor/architecture/007-studio-preview-png-export.md`** so future changes do not “fix” export only inside random TSX layouts.
+
+---
+
 ### `parse-studio-draft-from-metadata.ts`
 
 **You see:** when you open **Studio**, your last TSX is there (or a clean slate if nothing was saved).  
@@ -99,6 +107,7 @@ Why strings? Because the iframe only eats a **string dinner** (`srcDoc`). The di
 | Preview blank, console mentions network | CDN (Tailwind / unpkg) blocked or offline. |
 | “Unsupported import …” | You tried to import something that is not `react` in the preview dollhouse. |
 | Preview never appears | Add TSX and fix compile errors—read the red box. |
+| PNG text looks shifted vs preview | See **`.cursor/architecture/007-studio-preview-png-export.md`**—do not paper over in layout-only hacks until that ADR is considered. |
 | Sizes look wrong | Check `social-canvas-presets` or the numbers you typed (we clamp to 64–8192). |
 
 ---
@@ -106,6 +115,7 @@ Why strings? Because the iframe only eats a **string dinner** (`srcDoc`). The di
 ## Where to read more (less “age 5”)
 
 - Project doc on **TSX preview security**: `docs/tsx-live-preview-security.md` (from repo root).
+- **PNG export / html2canvas decisions**: `.cursor/architecture/007-studio-preview-png-export.md`.
 
 ---
 

@@ -1,5 +1,8 @@
 import { escapeForInlineScript } from "./escape-for-inline-script";
 
+/** Matches the preview mount node in {@link buildTsxReactPreviewSrcDoc} HTML (`#root`). */
+export const IMAGE_STUDIO_PREVIEW_ROOT_ELEMENT_ID = "root";
+
 const PREVIEW_REACT_UMD_VERSION = "18.3.1";
 
 export type ImageStudioPreviewDimensions = {
@@ -40,6 +43,49 @@ function __imageStudioPreviewRequire(specifier) {
       Fragment: React.Fragment,
     };
   }
+  // Next.js App Router modules (studio preview has no Next runtime — stubs only).
+  if (specifier === 'next/navigation') {
+    return {
+      __esModule: true,
+      useRouter: function useRouter() {
+        return {
+          push: function () {},
+          replace: function () {},
+          prefetch: function () {},
+          refresh: function () {},
+          back: function () {},
+          forward: function () {},
+        };
+      },
+      usePathname: function usePathname() {
+        return '/';
+      },
+      useSearchParams: function useSearchParams() {
+        return new URLSearchParams();
+      },
+      useParams: function useParams() {
+        return {};
+      },
+      useSelectedLayoutSegment: function useSelectedLayoutSegment() {
+        return null;
+      },
+      useSelectedLayoutSegments: function useSelectedLayoutSegments() {
+        return [];
+      },
+      redirect: function redirect() {},
+      permanentRedirect: function permanentRedirect() {},
+      notFound: function notFound() {},
+    };
+  }
+  if (specifier === 'next/link') {
+    return {
+      __esModule: true,
+      default: function Link(props) {
+        var href = props && props.href != null ? String(props.href) : '#';
+        return React.createElement('a', { href: href }, props && props.children);
+      },
+    };
+  }
   throw new Error('Unsupported import in TSX preview (only react is available): ' + String(specifier));
 }
 `.trim();
@@ -60,7 +106,7 @@ export const buildTsxReactPreviewSrcDoc = (
   const bootScript = `
 ${previewRequireShim}
 (function () {
-  var rootEl = document.getElementById('root');
+  var rootEl = document.getElementById('${IMAGE_STUDIO_PREVIEW_ROOT_ELEMENT_ID}');
   function showErr(err) {
     var msg = err && err.stack ? err.stack : String(err && err.message ? err.message : err);
     if (rootEl) {
@@ -108,5 +154,5 @@ ${previewRequireShim}
 
   const safeBoot = escapeForInlineScript(bootScript);
 
-  return `<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=${w}"/><script src="https://cdn.tailwindcss.com"></script><script crossorigin src="${reactUrl}"></script><script crossorigin src="${reactDomUrl}"></script></head><body class="min-h-screen bg-white text-gray-900 antialiased"><div id="root" style="width:${w}px;min-height:${h}px;box-sizing:border-box"></div><script>${safeBoot}</script></body></html>`;
+  return `<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=${w}"/><script src="https://cdn.tailwindcss.com"></script><script crossorigin src="${reactUrl}"></script><script crossorigin src="${reactDomUrl}"></script></head><body class="min-h-screen bg-white text-gray-900 antialiased"><div id="${IMAGE_STUDIO_PREVIEW_ROOT_ELEMENT_ID}" style="width:${w}px;min-height:${h}px;box-sizing:border-box"></div><script>${safeBoot}</script></body></html>`;
 };

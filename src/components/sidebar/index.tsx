@@ -1,10 +1,17 @@
 "use client";
 
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useMemo } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { PanelLeft, PanelLeftClose, Rows3 } from "lucide-react";
+import { BookOpen, PanelLeft, PanelLeftClose, Rows3 } from "lucide-react";
 import { getAppSidebarSections } from "./get-app-sidebar-sections";
+
+const isDocsActive = (pathname: string): boolean => {
+  if (pathname === "/docs" || pathname.startsWith("/docs/")) {
+    return true;
+  }
+  return false;
+};
 
 /**
  * Whether the Graphics surface is active (home list or studio).
@@ -15,17 +22,23 @@ const isGraphicsActive = (pathname: string): boolean => {
   return false;
 };
 
+type SidebarProps = {
+  collapsed: boolean;
+  onToggleCollapsed: () => void;
+};
+
 /**
  * App shell sidebar (Luckee-style collapse, single primary nav item).
  */
-export const Sidebar = () => {
+export const Sidebar = (props: SidebarProps) => {
+  const { collapsed, onToggleCollapsed } = props;
   const pathname = usePathname();
   const sections = useMemo(() => getAppSidebarSections(), []);
-  const [collapsed, setCollapsed] = useState(false);
 
   const isActiveHref = useCallback(
     (href: string, name: string) => {
       if (name === "Graphics") return isGraphicsActive(pathname);
+      if (name === "Docs") return isDocsActive(pathname);
       if (href === "/") return pathname === "/";
       return pathname === href || pathname.startsWith(`${href}/`);
     },
@@ -56,7 +69,7 @@ export const Sidebar = () => {
         </Link>
         <button
           type="button"
-          onClick={() => setCollapsed(!collapsed)}
+          onClick={onToggleCollapsed}
           className={styles.collapseBtn}
           aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
         >
@@ -73,10 +86,11 @@ export const Sidebar = () => {
             <div className={styles.navGroupItems}>
               {section.links.map((link) => {
                 const leafActive = isActiveHref(link.href, link.name);
+                const Icon = link.name === "Docs" ? BookOpen : Rows3;
                 return (
                   <div key={link.href} className={styles.parentRow(leafActive)}>
                     <Link href={link.href} className={styles.parentLink(collapsed)} title={link.name}>
-                      <Rows3 className={styles.icon(leafActive)} />
+                      <Icon className={styles.icon(leafActive)} />
                       {!collapsed && <span className={styles.linkLabel}>{link.name}</span>}
                     </Link>
                   </div>

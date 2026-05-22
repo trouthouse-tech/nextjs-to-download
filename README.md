@@ -24,7 +24,7 @@ npm install
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000). On **localhost** (and `127.0.0.1` / `*.localhost`), a one-time welcome explains storage and security; dismiss permanently or until you close the tab—clearing site data shows it again.
+Open [http://localhost:3064](http://localhost:3064). On **localhost** (and `127.0.0.1` / `*.localhost`), a one-time welcome explains storage and security; dismiss permanently or until you close the tab—clearing site data shows it again.
 
 Create a graphic, then open **Studio** from the list (`/studio`).
 
@@ -35,7 +35,7 @@ Create a graphic, then open **Studio** from the list (`/studio`).
 
 ## API layer
 
-- **`src/api/config.ts`** — `API_BASE_URL` defaults to `http://127.0.0.1:3000` for optional future localhost services; **nothing in the default app calls it**.
+- **`src/api/config.ts`** — `API_BASE_URL` defaults to `http://127.0.0.1:3064` (same default port as `npm run dev`) for optional future localhost services; **nothing in the default app calls it**.
 - **`src/api/image-creation-studio/*`** — same function names as a typical HTTP client (`listImageGraphicsApi`, `createImageGraphicApi`, `patchImageGraphicStudioDraft`, etc.), implemented with **read/write of the vault above**. There is **no** chat, ledger, or LLM exchange layer in this repo.
 
 ## Redux
@@ -44,12 +44,16 @@ Thunks in `src/store/thunks/image-creation-studio/` call those API wrappers and 
 
 ## Security
 
-TSX preview **executes compiled JavaScript** in an iframe. See `docs/tsx-live-preview-security.md`. Treat pasted or model-generated TSX as **trusted input** only.
+TSX preview **executes compiled JavaScript** in an iframe. Treat pasted or model-generated TSX as **trusted input** only. **Canonical in-app guide:** open **`/docs/security/tsx-preview`** on the deployed or local site (also see `docs/tsx-live-preview-security.md` in the repo).
+
+## Documentation (site)
+
+In-app guides live under **`/docs`** (static TSX, ships with the deploy). Repo `docs/*.md` files can stay as drafts or mirrors.
 
 ## Layout
 
 - `src/app` — `/` list, `/studio` editor (wrapped by `AppShell` + **Luckee-style sidebar** in root layout)
-- `src/components/sidebar` — collapsible rail, single **Graphics** item (home + studio both count as active)
+- `src/components/sidebar` — collapsible rail: **Graphics** (home + studio) and **Docs** (`/docs`)
 - `src/packages/graphics-studio` — studio UI
 - `src/packages/graphics` — home list, `header/` (list chrome + create modal)
 - `src/store` — Redux slices + thunks
